@@ -22,4 +22,12 @@ export class ApiError extends Error {
   get isBadRequest(): boolean {
     return this.status === 400;
   }
+
+  get isServiceUnavailable(): boolean {
+    return this.status === 503;
+  }
+
+  get isServerError(): boolean {
+    return this.status >= 500;
+  }
 }

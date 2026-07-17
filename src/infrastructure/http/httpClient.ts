@@ -23,6 +23,17 @@ function extractMessage(data: unknown, fallback: string): string {
   return fallback;
 }
 
+function extractCode(data: unknown): string | undefined {
+  if (!data || typeof data !== 'object') return undefined;
+  const record = data as Record<string, unknown>;
+  if (typeof record.code === 'string') return record.code;
+  if (typeof record.error === 'string' && record.error.includes('Error')) {
+    return record.error;
+  }
+  if (typeof record.name === 'string') return record.name;
+  return undefined;
+}
+
 export function createHttpClient(deps: HttpClientDeps): AxiosInstance {
   const client = axios.create({
     baseURL: env.apiBaseUrl,
@@ -51,7 +62,12 @@ export function createHttpClient(deps: HttpClientDeps): AxiosInstance {
         deps.onUnauthorized?.();
       }
 
-      throw new ApiError(message, status, undefined, error.response?.data);
+      throw new ApiError(
+        message,
+        status,
+        extractCode(error.response?.data),
+        error.response?.data,
+      );
     },
   );
 

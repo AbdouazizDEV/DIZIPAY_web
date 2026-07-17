@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,6 +8,8 @@ import {
   usePaymentLinkStatus,
   usePublicPaymentLink,
 } from '../../../application/payment-links/usePaymentLinks';
+import { usePaymentProviders } from '../../../application/payment-providers/usePaymentProviders';
+import type { PaymentProviderType } from '../../../domain/entities/PaymentLink';
 import { PaymentLinkStatus } from '../../../domain/entities/PaymentLink';
 import { ApiError } from '../../../domain/errors/ApiError';
 import { getErrorMessage } from '../../../shared/utils/errors';
@@ -41,6 +43,7 @@ export function PublicPayPage() {
   const { token } = useParams<{ token: string }>();
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [showPhoneForm, setShowPhoneForm] = useState(false);
+  const [selectedProvider, setSelectedProvider] = useState<PaymentProviderType>('PSPI');
 
   useEffect(() => {
     const on = () => setIsOffline(false);
@@ -54,11 +57,29 @@ export function PublicPayPage() {
   }, []);
 
   const publicLink = usePublicPaymentLink(token);
+  const providersQuery = usePaymentProviders();
   const liveStatus = usePaymentLinkStatus(token, {
     enabled: Boolean(token) && !isOffline && !publicLink.isError,
     pollMs: 4000,
   });
   const pay = usePayPaymentLink(token ?? '');
+
+  const providers = providersQuery.data ?? [];
+
+  const selectedVm = useMemo(
+    () => providers.find((p) => p.type === selectedProvider),
+    [providers, selectedProvider],
+  );
+
+  useEffect(() => {
+    if (providers.length === 0) return;
+    const current = providers.find((p) => p.type === selectedProvider);
+    if (current?.available) return;
+    const firstAvailable = providers.find((p) => p.available);
+    if (firstAvailable) {
+      setSelectedProvider(firstAvailable.type);
+    }
+  }, [providers, selectedProvider]);
 
   const {
     register,
@@ -124,6 +145,11 @@ export function PublicPayPage() {
     );
   }
 
+  const providerUnavailable =
+    selectedVm !== undefined && !selectedVm.available;
+  const canInitiatePhone =
+    !isOffline && !providerUnavailable && Boolean(selectedVm?.available ?? true);
+
   return (
     <div className={styles.shell}>
       <OfflineBanner visible={isOffline} />
@@ -134,12 +160,67 @@ export function PublicPayPage() {
         {link.description ? <p className={styles.description}>{link.description}</p> : null}
         <p className={styles.expiry}>Valable jusqu’au {link.expiresAtLabel}</p>
 
+        <div className={styles.providerBlock}>
+          <p className={styles.providerKicker}>Mode de paiement</p>
+          {providersQuery.isLoading ? (
+            <p className={styles.hint}>Chargement des modes…</p>
+          ) : providersQuery.isError ? (
+            <p className={styles.error} role="alert">
+              {getErrorMessage(
+                providersQuery.error,
+                'Impossible de charger les modes de paiement.',
+              )}
+            </p>
+          ) : providers.length === 0 ? (
+            <p className={styles.hint}>Aucun mode de paiement disponible pour le moment.</p>
+          ) : (
+            <div
+              className={styles.providerChips}
+              role="radiogroup"
+              aria-label="Mode de paiement"
+            >
+              {providers.map((provider) => {
+                const selected = selectedProvider === provider.type;
+                const disabled = !provider.available;
+                return (
+                  <button
+                    key={provider.type}
+                    type="button"
+                    role="radio"
+                    aria-checked={selected}
+                    aria-disabled={disabled}
+                    disabled={disabled}
+                    className={`${styles.providerChip} ${selected ? styles.providerChipActive : ''} ${disabled ? styles.providerChipDisabled : ''}`}
+                    onClick={() => {
+                      if (!disabled) setSelectedProvider(provider.type);
+                    }}
+                    title={disabled ? provider.reason : provider.label}
+                  >
+                    <span className={styles.providerChipLabel}>{provider.shortLabel}</span>
+                    <span className={styles.providerChipSub}>{provider.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+          {selectedVm && !selectedVm.available && selectedVm.reason ? (
+            <p className={styles.providerReason} role="status">
+              {selectedVm.reason}
+            </p>
+          ) : null}
+        </div>
+
         <QrDisplay svg={link.svg} payload={link.qrPayload} size={260} />
         <p className={styles.hint}>{link.instructions}</p>
 
         <div className={styles.phoneBlock}>
           {!showPhoneForm ? (
-            <Button fullWidth variant="secondary" onClick={() => setShowPhoneForm(true)}>
+            <Button
+              fullWidth
+              variant="secondary"
+              disabled={providerUnavailable}
+              onClick={() => setShowPhoneForm(true)}
+            >
               Payer avec mon numéro
             </Button>
           ) : (
@@ -149,11 +230,12 @@ export function PublicPayPage() {
                 try {
                   await pay.mutateAsync({
                     clientPhone: values.clientPhone.replace(/\s+/g, ''),
+                    paymentProvider: selectedProvider,
                   });
                   reset();
                   await liveStatus.refetch();
                 } catch {
-                  // pay.error
+                  // pay.error (incl. 503)
                 }
               })}
               noValidate
@@ -178,7 +260,7 @@ export function PublicPayPage() {
                   {getErrorMessage(pay.error)}
                 </p>
               ) : null}
-              <Button type="submit" fullWidth disabled={pay.isPending || isOffline}>
+              <Button type="submit" fullWidth disabled={pay.isPending || !canInitiatePhone}>
                 {pay.isPending ? 'Initiation…' : 'Initier le paiement'}
               </Button>
             </form>

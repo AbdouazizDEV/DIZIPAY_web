@@ -60,10 +60,14 @@ export interface CreatePaymentLinkInput {
   includeSvg?: boolean;
 }
 
+export type PaymentProviderType = 'PSPI' | 'WAVE';
+
 export interface PayPaymentLinkInput {
   clientPhone?: string;
   qrCode?: string;
   clientAlias?: string;
+  /** Défaut API : PSPI */
+  paymentProvider?: PaymentProviderType;
 }
 
 export interface PayPaymentLinkResult {

@@ -26,6 +26,12 @@ const links = [
       pathname === '/links' ||
       (pathname.startsWith('/links/') && pathname !== '/links/new'),
   },
+  {
+    to: '/payouts/new',
+    label: 'Virement',
+    icon: '↗',
+    match: (pathname: string) => pathname.startsWith('/payouts'),
+  },
 ];
 
 export function MerchantLayout() {

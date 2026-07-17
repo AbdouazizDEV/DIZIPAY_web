@@ -1,9 +1,13 @@
 import type { AxiosInstance } from 'axios';
 import type { IAuthRepository } from '../../domain/repositories/IAuthRepository';
 import type { IPaymentLinkRepository } from '../../domain/repositories/IPaymentLinkRepository';
+import type { IPaymentProviderRepository } from '../../domain/repositories/IPaymentProviderRepository';
+import type { IPayoutRepository } from '../../domain/repositories/IPayoutRepository';
 import { createHttpClient } from '../http/httpClient';
 import { HttpAuthRepository } from './HttpAuthRepository';
 import { HttpPaymentLinkRepository } from './HttpPaymentLinkRepository';
+import { HttpPaymentProviderRepository } from './HttpPaymentProviderRepository';
+import { HttpPayoutRepository } from './HttpPayoutRepository';
 import {
   sessionStorageAdapter,
   type ISessionStorage,
@@ -14,6 +18,8 @@ export interface AppServices {
   sessionStorage: ISessionStorage;
   authRepository: IAuthRepository;
   paymentLinkRepository: IPaymentLinkRepository;
+  paymentProviderRepository: IPaymentProviderRepository;
+  payoutRepository: IPayoutRepository;
 }
 
 let services: AppServices | null = null;
@@ -35,6 +41,8 @@ export function getServices(): AppServices {
       sessionStorage,
       authRepository: new HttpAuthRepository(http),
       paymentLinkRepository: new HttpPaymentLinkRepository(http),
+      paymentProviderRepository: new HttpPaymentProviderRepository(http),
+      payoutRepository: new HttpPayoutRepository(http),
     };
   }
   return services;

@@ -12,6 +12,7 @@ import { CreateLinkPage } from './pages/CreateLink/CreateLinkPage';
 import { LinksListPage } from './pages/LinksList/LinksListPage';
 import { LinkDetailPage } from './pages/LinkDetail/LinkDetailPage';
 import { PublicPayPage } from './pages/PublicPay/PublicPayPage';
+import { CreatePayoutPage } from './pages/CreatePayout/CreatePayoutPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,6 +43,7 @@ export function App() {
                   <Route path="links" element={<LinksListPage />} />
                   <Route path="links/new" element={<CreateLinkPage />} />
                   <Route path="links/:token" element={<LinkDetailPage />} />
+                  <Route path="payouts/new" element={<CreatePayoutPage />} />
                 </Route>
               </Route>
 

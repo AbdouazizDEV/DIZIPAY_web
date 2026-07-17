@@ -1,6 +1,6 @@
 # DiziPay Website
 
-Application web **React + TypeScript + PWA** pour générer et payer des liens de paiement DiziPay (PI-SPI / XOF).
+Application web **React + TypeScript + PWA** pour générer et payer des liens de paiement DiziPay (PI-SPI / XOF), et initier des virements sortants.
 
 ## Prérequis
 
@@ -35,6 +35,8 @@ VITE_API_BASE_URL=http://localhost:3000/api/v1
 VITE_APP_NAME=DiziPay
 ```
 
+Prod typique : `VITE_API_BASE_URL=https://dizipay-api.onrender.com/api/v1`
+
 Côté backend, définir notamment :
 
 - `PAYMENT_LINK_PUBLIC_BASE_URL=http://localhost:5173` (URLs `/pay/{token}`)
@@ -44,7 +46,7 @@ Côté backend, définir notamment :
 
 ```text
 src/
-  domain/           # entités & contrats (IAuthRepository, IPaymentLinkRepository)
+  domain/           # entités & contrats (auth, payment-links, providers, payouts)
   application/      # hooks métier + mappers DTO → ViewModel
   infrastructure/   # HTTP client, repos, sessionStorage JWT
   presentation/     # pages, layouts, routes, providers
@@ -64,15 +66,17 @@ src/
 3. `/links/new` — créer (montant en XOF → centimes API)
 4. `/links` — liste, filtres, copier / ouvrir / annuler
 5. `/links/:token` — détail + polling statut
+6. `/payouts/new` — virement sortant MOBILE_MONEY ou BANK_ACCOUNT (`POST /payouts`)
 
 ### Client (public)
 
-- `/pay/:token` — montant, QR, paiement téléphone optionnel, polling jusqu’à PAID / EXPIRED / CANCELLED
+- `/pay/:token` — montant, **choix du mode** (PSPI / Wave via `GET /payment-providers`), QR, paiement téléphone avec `paymentProvider`, polling jusqu’à PAID / EXPIRED / CANCELLED
+- Wave indisponible → chip désactivée + message `reason` ; HTTP **503** affiché clairement
 
 ## Montants
 
 L’API exprime `amount` en **centimes XOF** (`150000` = `1 500 XOF`).  
-Le formulaire marchand saisit des unités XOF ; `xofToCents()` convertit avant l’appel API.
+Les formulaires marchand saisissent des unités XOF ; `xofToCents()` convertit avant l’appel API.
 
 ## PWA
 
@@ -96,5 +100,5 @@ Puis tester l’installation depuis Chrome (Android / desktop).
 2. Vérifier `CORS_ORIGIN` et `PAYMENT_LINK_PUBLIC_BASE_URL=http://localhost:5173`.
 3. Lancer ce front : `npm run dev`.
 4. Se connecter avec le compte seed `merchant@dizipay.local` / `DizipayDev1!`.
-5. Créer un lien, copier l’URL `/pay/{token}`, l’ouvrir en navigation privée pour simuler le client.
-6. Scanner le QR (ou payer via téléphone) puis observer le passage à **Payé** via le polling.
+5. Créer un lien, ouvrir `/pay/{token}` : choisir PSPI, scanner le QR ou payer via téléphone.
+6. Tester `/payouts/new` (mobile money avec le compte seed `10188672388920614979`).
