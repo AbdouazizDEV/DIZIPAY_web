@@ -1,0 +1,25 @@
+.wrap {
+  text-align: center;
+  padding: var(--space-6) var(--space-4);
+  animation: fade-up 400ms ease both;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px dashed var(--color-border);
+}
+
+.title {
+  font-size: 1.4rem;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  color: var(--color-muted);
+  max-width: 36ch;
+  margin-inline: auto;
+  font-weight: 600;
+}
+
+.action {
+  margin-top: var(--space-5);
+}

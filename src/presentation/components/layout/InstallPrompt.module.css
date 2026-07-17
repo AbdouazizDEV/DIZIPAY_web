@@ -1,0 +1,35 @@
+.banner {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid #b6e6ce;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #e9fbf2 0%, #ffffff 70%);
+  box-shadow: var(--shadow-soft);
+  animation: fade-up 360ms ease both;
+}
+
+.banner strong {
+  color: var(--color-primary);
+  font-weight: 800;
+}
+
+.banner p {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 720px) {
+  .banner {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}

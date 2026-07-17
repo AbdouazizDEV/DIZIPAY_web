@@ -1,0 +1,31 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0.2rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.active {
+  background: var(--color-mint-soft);
+  color: var(--color-mint-strong);
+}
+
+.paid {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+
+.expired {
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
+}
+
+.cancelled {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}

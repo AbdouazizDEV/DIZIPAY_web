@@ -1,0 +1,210 @@
+.shell {
+  min-height: 100dvh;
+  display: grid;
+}
+
+.sidebar {
+  display: none;
+}
+
+.mainColumn {
+  min-width: 0;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 60px;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid rgba(207, 227, 218, 0.85);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(14px);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.content {
+  width: min(100%, var(--max-content));
+  margin-inline: auto;
+  padding: 1.15rem 1rem calc(var(--nav-height) + 1.4rem);
+}
+
+.installSlot {
+  margin-bottom: 1rem;
+}
+
+.bottomNav {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  min-height: var(--nav-height);
+  background: rgba(255, 255, 255, 0.94);
+  border-top: 1px solid var(--color-border);
+  backdrop-filter: blur(16px);
+  padding: 0.35rem 0.4rem calc(0.35rem + env(safe-area-inset-bottom));
+  box-shadow: 0 -10px 30px rgba(0, 64, 63, 0.06);
+}
+
+.bottomLink {
+  display: grid;
+  place-items: center;
+  gap: 0.15rem;
+  min-height: var(--touch);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--color-muted);
+  border-radius: 16px;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.bottomIcon {
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--color-mint);
+  opacity: 0.55;
+}
+
+.bottomLink.active {
+  color: var(--color-primary);
+  background: var(--color-mint-soft);
+}
+
+.bottomLink.active .bottomIcon {
+  opacity: 1;
+}
+
+.nav,
+.logout,
+.brandBlock,
+.sidebarFoot {
+  display: none;
+}
+
+@media (min-width: 960px) {
+  .shell {
+    grid-template-columns: var(--sidebar-width) 1fr;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.75rem 1.2rem;
+    background:
+      radial-gradient(480px 280px at 20% 0%, rgba(64, 192, 128, 0.28), transparent 55%),
+      linear-gradient(180deg, #00403f 0%, #003332 100%);
+    color: var(--color-sidebar-text);
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .brandBlock {
+    display: grid;
+    gap: 0.65rem;
+    justify-items: start;
+    padding: 0.35rem 0.35rem 0.85rem;
+  }
+
+  .sidebarLogo {
+    width: 168px;
+    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.22));
+    background: #fff;
+    border-radius: 18px;
+    padding: 0.55rem 0.7rem;
+  }
+
+  .brandTag {
+    color: var(--color-sidebar-muted);
+    font-size: 0.86rem;
+    font-weight: 700;
+    padding-inline: 0.35rem;
+  }
+
+  .nav {
+    display: grid;
+    gap: 0.45rem;
+    flex: 1;
+  }
+
+  .navLink {
+    min-height: var(--touch);
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0 0.95rem;
+    border-radius: 16px;
+    color: var(--color-sidebar-muted);
+    font-weight: 800;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .navIcon {
+    width: 28px;
+    height: 28px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: rgba(64, 192, 128, 0.16);
+    color: var(--color-mint);
+    font-size: 0.95rem;
+  }
+
+  .navLink:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    transform: translateX(2px);
+  }
+
+  .navLink.active {
+    background: linear-gradient(135deg, rgba(64, 192, 128, 0.28), rgba(64, 192, 128, 0.12));
+    color: #fff;
+    box-shadow: inset 0 0 0 1px rgba(64, 192, 128, 0.35);
+  }
+
+  .navLink.active .navIcon {
+    background: var(--color-mint);
+    color: #053328;
+  }
+
+  .sidebarFoot {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .sidebarHint {
+    font-size: 0.8rem;
+    color: var(--color-sidebar-muted);
+    padding-inline: 0.35rem;
+  }
+
+  .logout {
+    display: inline-flex;
+    width: 100%;
+  }
+
+  .topbar,
+  .bottomNav {
+    display: none;
+  }
+
+  .content {
+    padding: 2.25rem 2rem 2.75rem;
+  }
+
+  .mainColumn {
+    background:
+      radial-gradient(700px 320px at 100% 0%, rgba(64, 192, 128, 0.08), transparent 50%);
+  }
+}
