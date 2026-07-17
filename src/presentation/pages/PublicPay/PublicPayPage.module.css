@@ -1,0 +1,126 @@
+.shell {
+  min-height: 100dvh;
+  display: grid;
+  place-items: start center;
+  padding: 1rem 1rem 2rem;
+}
+
+.pay,
+.statePanel {
+  width: min(100%, 440px);
+  margin-top: 0.35rem;
+  padding: 1.4rem 1.15rem 1.6rem;
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lift);
+  animation: fade-up 480ms ease both;
+  text-align: center;
+}
+
+.statePanel {
+  display: grid;
+  gap: 0.8rem;
+  justify-items: center;
+  margin-top: 12vh;
+}
+
+.success {
+  background:
+    radial-gradient(320px 180px at 50% 0%, rgba(64, 192, 128, 0.22), transparent 60%),
+    linear-gradient(180deg, #f4fbf7 0%, #ffffff 70%);
+}
+
+.brand {
+  width: 150px;
+  margin-inline: auto;
+  margin-bottom: 0.35rem;
+}
+
+.merchant {
+  margin-top: 0.55rem;
+  color: var(--color-muted);
+  font-weight: 800;
+}
+
+.heroAmount {
+  font-family: var(--font-display);
+  font-size: clamp(2.35rem, 10vw, 3.2rem);
+  font-weight: 800;
+  color: var(--color-primary);
+  margin: 0.2rem 0 0.45rem;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.description {
+  color: var(--color-ink);
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+.expiry,
+.hint,
+.centerMsg {
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.hint {
+  margin: 1rem 0 1.15rem;
+}
+
+.phoneBlock {
+  margin-bottom: 1rem;
+}
+
+.phoneForm {
+  display: grid;
+  gap: 0.85rem;
+  text-align: left;
+}
+
+.error {
+  color: var(--color-danger);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.live {
+  color: var(--color-mint-strong);
+  font-weight: 800;
+  animation: soft-pulse 1.8s ease infinite;
+}
+
+.install {
+  margin-top: 1.25rem;
+  text-align: left;
+}
+
+.offline {
+  width: min(100%, 440px);
+  margin-bottom: 0.75rem;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
+  font-weight: 800;
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  .shell {
+    place-items: center;
+    padding: 2rem;
+  }
+
+  .pay {
+    width: min(100%, 480px);
+    padding: 1.85rem 1.6rem 2rem;
+  }
+
+  .heroAmount {
+    font-size: 3.2rem;
+  }
+}

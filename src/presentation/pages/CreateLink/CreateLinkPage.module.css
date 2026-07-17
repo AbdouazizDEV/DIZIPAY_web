@@ -1,0 +1,316 @@
+.page {
+  display: grid;
+  gap: 1.35rem;
+  animation: fade-up 420ms ease both;
+}
+
+.hero {
+  padding: 1.25rem 1.2rem;
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(420px 200px at 100% 0%, rgba(64, 192, 128, 0.32), transparent 55%),
+    linear-gradient(135deg, #00403f 0%, #012f2d 100%);
+  color: #cfe8dc;
+  box-shadow: var(--shadow-soft);
+}
+
+.kicker {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-mint);
+  margin-bottom: 0.4rem;
+}
+
+.hero h1 {
+  color: #fff;
+  font-size: clamp(1.75rem, 4vw, 2.3rem);
+  margin-bottom: 0.35rem;
+}
+
+.hero p {
+  font-weight: 600;
+  max-width: 42ch;
+}
+
+.layout {
+  display: grid;
+  gap: 1.15rem;
+}
+
+.formCard {
+  display: grid;
+  gap: 1.15rem;
+  padding: 1.25rem 1.15rem 1.4rem;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
+}
+
+.amountBlock {
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  background: linear-gradient(160deg, #e9fbf2 0%, #f7fffb 100%);
+  border: 1px solid #b9e8d0;
+}
+
+.amountField {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.amountField :global(input) {
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-primary);
+  border-color: #b6e6ce;
+  background: #fff;
+}
+
+.currency {
+  min-height: var(--touch);
+  padding: 0 0.95rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 800;
+  color: var(--color-primary);
+  background: #fff;
+  border: 1.5px solid #b6e6ce;
+}
+
+.durationBlock {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.durationLabel {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+.presets {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.preset {
+  min-height: 44px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-border);
+  background: #fff;
+  color: var(--color-muted);
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.preset:hover {
+  border-color: #b6e6ce;
+  color: var(--color-primary);
+}
+
+.presetActive {
+  background: var(--color-mint-soft);
+  border-color: var(--color-mint);
+  color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(64, 192, 128, 0.16);
+}
+
+.preview {
+  display: none;
+}
+
+.error {
+  color: var(--color-danger);
+  font-weight: 700;
+}
+
+.successLayout {
+  display: grid;
+  justify-items: center;
+}
+
+.successCard {
+  width: min(100%, 440px);
+  display: grid;
+  gap: 1rem;
+  padding: 1.4rem;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
+}
+
+.amount {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 5vw, 2.5rem);
+  font-weight: 800;
+  color: var(--color-primary);
+  text-align: center;
+}
+
+.desc,
+.url {
+  text-align: center;
+  color: var(--color-muted);
+  word-break: break-all;
+  font-weight: 600;
+}
+
+.actions {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.detailLink {
+  text-align: center;
+  min-height: var(--touch);
+  display: grid;
+  place-items: center;
+  color: var(--color-mint-strong);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (min-width: 960px) {
+  .page {
+    gap: 1.6rem;
+  }
+
+  .hero {
+    padding: 1.6rem 1.7rem;
+  }
+
+  .layout {
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    align-items: start;
+    gap: 1.35rem;
+  }
+
+  .formCard {
+    padding: 1.55rem 1.5rem 1.7rem;
+  }
+
+  .preview {
+    display: block;
+    position: sticky;
+    top: 1.5rem;
+  }
+
+  .previewEyebrow {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 0.65rem;
+  }
+
+  .previewCard {
+    padding: 1.35rem 1.2rem 1.45rem;
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(280px 160px at 50% 0%, rgba(64, 192, 128, 0.18), transparent 60%),
+      #fff;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-lift);
+    text-align: center;
+  }
+
+  .previewMerchant {
+    color: var(--color-muted);
+    font-weight: 800;
+    margin-bottom: 0.35rem;
+  }
+
+  .previewAmount {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3vw, 2.6rem);
+    font-weight: 800;
+    color: var(--color-primary);
+    letter-spacing: -0.03em;
+    margin-bottom: 0.35rem;
+  }
+
+  .previewDesc {
+    color: var(--color-muted);
+    font-weight: 600;
+    min-height: 2.6em;
+    margin-bottom: 1rem;
+  }
+
+  .previewQr {
+    width: 148px;
+    height: 148px;
+    margin: 0 auto 1rem;
+    border-radius: 18px;
+    border: 2px dashed #b6e6ce;
+    background:
+      linear-gradient(135deg, transparent 46%, rgba(64, 192, 128, 0.35) 46%, rgba(64, 192, 128, 0.35) 54%, transparent 54%),
+      #f4fbf7;
+    display: grid;
+    place-items: center;
+    position: relative;
+  }
+
+  .previewQr::before,
+  .previewQr::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-color: var(--color-mint);
+    border-style: solid;
+  }
+
+  .previewQr::before {
+    top: 8px;
+    left: 8px;
+    border-width: 3px 0 0 3px;
+  }
+
+  .previewQr::after {
+    bottom: 8px;
+    right: 8px;
+    border-width: 0 3px 3px 0;
+  }
+
+  .previewMeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0.9rem;
+    border-radius: 14px;
+    background: var(--color-mint-soft);
+    margin-bottom: 0.85rem;
+    font-weight: 700;
+  }
+
+  .previewMeta span {
+    color: var(--color-muted);
+  }
+
+  .previewMeta strong {
+    color: var(--color-primary);
+  }
+
+  .previewHint {
+    color: var(--color-muted);
+    font-size: 0.86rem;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+}
