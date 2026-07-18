@@ -152,7 +152,7 @@ export function CreateLinkPage() {
       <header className={styles.hero}>
         <p className={styles.kicker}>Nouveau paiement</p>
         <h1>Créer un lien</h1>
-        <p>Montant en XOF — conversion automatique en centimes pour l’API.</p>
+        <p>Indiquez le montant en francs CFA (XOF). Le lien sera prêt à partager.</p>
       </header>
 
       <div className={styles.layout}>

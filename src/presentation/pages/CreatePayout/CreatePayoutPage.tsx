@@ -93,7 +93,7 @@ export function CreatePayoutPage() {
       <header className={styles.hero}>
         <p className={styles.kicker}>Sortie de fonds</p>
         <h1>Initier un virement</h1>
-        <p>Mobile money ou compte bancaire — montant saisi en XOF.</p>
+        <p>Mobile money ou compte bancaire — montant en francs CFA (XOF).</p>
       </header>
 
       <form
@@ -136,7 +136,7 @@ export function CreatePayoutPage() {
           label="Compte de débit (marchand)"
           htmlFor="debitAccount"
           error={errors.debitAccount?.message}
-          hint="Compte PI-SPI débité (prérempli pour la démo)"
+          hint="Compte débité pour ce virement (prérempli pour la démo)"
         >
           <TextInput id="debitAccount" {...register('debitAccount')} />
         </Field>
@@ -146,7 +146,7 @@ export function CreatePayoutPage() {
             label="Montant (XOF)"
             htmlFor="amountXof"
             error={errors.amountXof?.message}
-            hint="Converti en centimes avant envoi à l’API"
+            hint="Montant en francs CFA"
           >
             <div className={styles.amountField}>
               <TextInput
@@ -235,7 +235,7 @@ export function CreatePayoutPage() {
                     ? errors.countryCode?.message
                     : undefined
                 }
-                hint="ISO 2 lettres"
+                hint="Code pays (ex. SN, FR)"
               >
                 <TextInput id="countryCode" maxLength={2} {...register('countryCode')} />
               </Field>
@@ -247,7 +247,7 @@ export function CreatePayoutPage() {
           label="Référence"
           htmlFor="reference"
           error={errors.reference?.message}
-          hint="Minimum 8 caractères, unique côté métier"
+          hint="Identifiant unique de votre virement (8 caractères minimum)"
         >
           <TextInput id="reference" {...register('reference')} />
         </Field>
@@ -267,7 +267,7 @@ export function CreatePayoutPage() {
         ) : null}
 
         <Button type="submit" fullWidth disabled={create.isPending}>
-          {create.isPending ? 'Initiation…' : 'Initier le virement'}
+          {create.isPending ? 'Envoi en cours…' : 'Envoyer le virement'}
         </Button>
       </form>
     </div>

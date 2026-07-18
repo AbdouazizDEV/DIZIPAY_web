@@ -25,7 +25,19 @@ describe('paymentProviderMapper', () => {
     });
     expect(vm.shortLabel).toBe('Wave');
     expect(vm.available).toBe(false);
-    expect(vm.reason).toContain('Wave');
+    expect(vm.logoSrc).toContain('wave');
+    expect(vm.reason).toMatch(/Wave/);
+    expect(vm.reason).not.toMatch(/POST/i);
+  });
+
+  it('maps PSPI with logo', () => {
+    const vm = toPaymentProviderViewModel({
+      type: 'PSPI',
+      label: 'PI-SPI (interopérable UEMOA)',
+      available: true,
+    });
+    expect(vm.logoSrc).toContain('PISPI');
+    expect(vm.shortLabel).toBe('PI-SPI');
   });
 });
 

@@ -1,6 +1,7 @@
 import type { PaymentLink, PublicPaymentLink } from '../../domain/entities/PaymentLink';
 import { PaymentLinkStatus } from '../../domain/entities/PaymentLink';
 import { formatDateTime, formatXofFromCents } from '../../shared/utils/money';
+import { toFriendlyPayInstructions } from '../../shared/utils/userMessages';
 
 export interface PaymentLinkViewModel {
   id: string;
@@ -84,9 +85,7 @@ export function toPublicPaymentLinkViewModel(
     merchantName: link.merchantName,
     qrPayload: link.qrPayload,
     svg: link.svg,
-    instructions:
-      link.instructions ??
-      'Scannez le QR avec votre application de paiement (Wave, Orange Money, Free Money, PI-SPI).',
+    instructions: toFriendlyPayInstructions(link.instructions),
     isPayable: link.status === PaymentLinkStatus.ACTIVE,
   };
 }

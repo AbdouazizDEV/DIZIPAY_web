@@ -194,9 +194,25 @@ export function PublicPayPage() {
                     onClick={() => {
                       if (!disabled) setSelectedProvider(provider.type);
                     }}
-                    title={disabled ? provider.reason : provider.label}
+                    title={
+                      disabled
+                        ? (provider.reason ?? `${provider.shortLabel} indisponible`)
+                        : provider.shortLabel
+                    }
                   >
-                    <span className={styles.providerChipLabel}>{provider.shortLabel}</span>
+                    <span className={styles.providerChipHead}>
+                      {provider.logoSrc ? (
+                        <img
+                          className={styles.providerLogo}
+                          src={provider.logoSrc}
+                          alt=""
+                          width={28}
+                          height={28}
+                          decoding="async"
+                        />
+                      ) : null}
+                      <span className={styles.providerChipLabel}>{provider.shortLabel}</span>
+                    </span>
                     <span className={styles.providerChipSub}>{provider.label}</span>
                   </button>
                 );
@@ -241,10 +257,10 @@ export function PublicPayPage() {
               noValidate
             >
               <Field
-                label="Téléphone wallet"
+                label="Téléphone"
                 htmlFor="clientPhone"
                 error={errors.clientPhone?.message}
-                hint="Ex. +221771234567"
+                hint="Exemple : +221 77 123 45 67"
               >
                 <TextInput
                   id="clientPhone"
@@ -261,7 +277,7 @@ export function PublicPayPage() {
                 </p>
               ) : null}
               <Button type="submit" fullWidth disabled={pay.isPending || !canInitiatePhone}>
-                {pay.isPending ? 'Initiation…' : 'Initier le paiement'}
+                {pay.isPending ? 'Paiement en cours…' : 'Confirmer le paiement'}
               </Button>
             </form>
           )}
